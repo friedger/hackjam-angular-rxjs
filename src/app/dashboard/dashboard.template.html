@@ -3,8 +3,8 @@
 <br>
 <hr/>
 <div class="grid grid-pad">
-  <a ngFor="let book in books"
-     routerLink="['/detail', book.id]"
+  <a *ngFor="let book of books"
+     [routerLink]="['/detail', book.id]"
      class="col-1-4">
     <div class="module hero">
       <h4>{{book.title}}</h4>

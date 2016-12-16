@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Book} from '../types/book';
 import {AppService} from '../services/app.service';
-import {Observable} from "rxjs";
-import {Router} from "@angular/router";
+import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'bs-books',
@@ -13,11 +13,11 @@ export class BooksComponent implements OnInit {
   books: Observable<Book[]>;
   selectedBook: Book;
 
-  constructor() {
+  constructor(private router: Router, private appService: AppService) {
   }
 
   ngOnInit(): void {
-
+    this.books = this.appService.getBooks();
   }
 
   add(title: string): void {
@@ -25,11 +25,11 @@ export class BooksComponent implements OnInit {
     if (!title) {
       return;
     }
-    // Call the service here and use the result as your new book list.
+    this.books = this.appService.create(title);
   }
 
   delete(book: Book): void {
-    // Delete the book, and use the result as your new book list.
+    this.books = this.appService.delete(book.id);
   }
 
   onSelect(book: Book): void {
@@ -37,6 +37,6 @@ export class BooksComponent implements OnInit {
   }
 
   gotoDetail(id: number): void {
-    // The Router service will help here
+    this.router.navigate(['/detail', id]);
   }
 }

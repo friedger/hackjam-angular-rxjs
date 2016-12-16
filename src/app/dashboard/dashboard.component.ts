@@ -15,6 +15,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Get all the books
+    this.bookService.getBooks().subscribe((books) => this.books = books);
   }
 }

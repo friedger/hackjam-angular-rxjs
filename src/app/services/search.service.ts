@@ -5,15 +5,15 @@ import {Book} from '../types/book';
 
 @Injectable()
 export class SearchService {
-  constructor() {
+  constructor(private http: Http) {
   }
 
   search(term: Observable<string>): Observable<Book[]> {
-    throw new Error('Oops. Not yet implemented...');
+    return term.debounceTime(300).switchMap(query => this.raw_search(query));
   }
 
   private raw_search(term: string): Observable<Book[]> {
     const url = `app/books/?title=${term}`;
-    throw new Error('Oops. Not yet implemented...');
+    return this.http.get(url).map((res: Response) => res.json().data as Book[]);
   }
 }

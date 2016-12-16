@@ -1,6 +1,6 @@
 import {NgModule}      from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule}   from '@angular/forms';
+import {FormsModule, ReactiveFormsModule}   from '@angular/forms';
 
 import {RoutesModule} from './app.routing';
 
@@ -14,21 +14,25 @@ import {BooksComponent}      from '../books/books.component';
 import {BookDetailComponent}  from '../book-detail/book-detail.component';
 import {AppService}          from '../services/app.service';
 import {BookSearchComponent} from '../book-search/book-search.component';
-import {HttpModule} from "@angular/http";
+import {HttpModule} from '@angular/http';
 
 @NgModule({
   imports: [
+    HttpModule,
+    RoutesModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService),
   ],
   declarations: [
+    AppComponent,
     DashboardComponent,
     BooksComponent,
     BookDetailComponent,
     BookSearchComponent,
   ],
-  providers: [],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

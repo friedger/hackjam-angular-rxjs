@@ -4,6 +4,7 @@ import {Observable}        from 'rxjs/Observable';
 import {Subject}           from 'rxjs/Subject';
 import {SearchService} from '../services/search.service';
 import {Book} from '../types/book';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'bs-book-search',
@@ -12,10 +13,13 @@ import {Book} from '../types/book';
   providers: [SearchService]
 })
 export class BookSearchComponent implements OnInit {
-  term$;
+  term: FormControl = new FormControl();
+  term$: Observable<string>;
   books: Observable<Book[]>;
 
-  constructor(private searchService: SearchService) {
+  constructor(private searchService: SearchService,
+    private router: Router) {
+    this.term$ = this.term.valueChanges.debounceTime(300);
   }
 
   ngOnInit(): void {
@@ -24,6 +28,6 @@ export class BookSearchComponent implements OnInit {
   }
 
   gotoDetail(book: Book): void {
-    // The router service will help here
+    this.router.navigate(['/detail', book.id]);
   }
 }
